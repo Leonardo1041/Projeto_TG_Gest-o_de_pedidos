@@ -1,0 +1,296 @@
+import { RestaurantConfig, Order, User, RestaurantTable } from '../types';
+
+export const INITIAL_RESTAURANTS: RestaurantConfig[] = [
+  {
+    id: 'rest-sabor-brasa',
+    ownerEmail: 'leonardo@email.com',
+    name: 'Sabor & Brasa',
+    tagline: 'Gestão de Salão, Comandas e Cozinha',
+    description: 'Hamburgueria e Cozinha Artesanal com Esteira KDS e Atendimento de Mesas.',
+    primaryColor: '#e11d48',
+    cuisine: 'Hamburgueria & Grelhados',
+    logoUrl: 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=300&q=80',
+    heroImageUrl: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=1200&q=80',
+    phone: '(16) 99123-4567',
+    address: 'Av. Dr. Thomaz Novelino, 100 - Franca - SP',
+    createdAt: Date.now() - 86400000 * 5,
+    categories: ['Burgers', 'Pizzas', 'Acompanhamentos', 'Bebidas', 'Sobremesas'],
+    menu: [
+      {
+        id: 'item-sb-1',
+        name: 'Burger Artesanal',
+        description: 'Pão brioche, carne artesanal 180g, queijo e molho especial da casa.',
+        price: 32.90,
+        category: 'Burgers',
+        prepTimeMinutes: 12,
+        imageUrl: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80',
+        available: true
+      },
+      {
+        id: 'item-sb-2',
+        name: 'Pizza Especial',
+        description: 'Massa artesanal italiana, molho pomodoro rústico e queijo selecionado.',
+        price: 45.00,
+        category: 'Pizzas',
+        prepTimeMinutes: 18,
+        imageUrl: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80',
+        available: true
+      },
+      {
+        id: 'item-sb-3',
+        name: 'Double Bacon Smash',
+        description: '2x burger 100g prensado, cheddar cremoso duplo e tiras crocantes de bacon.',
+        price: 38.00,
+        category: 'Burgers',
+        prepTimeMinutes: 10,
+        imageUrl: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=600&q=80',
+        available: true
+      },
+      {
+        id: 'item-sb-4',
+        name: 'Batata Rústica com Alecrim',
+        description: 'Batatas com corte artesanal temperadas com alecrim fresco e sal marinho.',
+        price: 18.00,
+        category: 'Acompanhamentos',
+        prepTimeMinutes: 8,
+        imageUrl: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80',
+        available: true
+      },
+      {
+        id: 'item-sb-5',
+        name: 'Refrigerante Lata 350ml',
+        description: 'Coca-Cola, Guaraná Antarctica ou Citrus geladíssimo.',
+        price: 7.00,
+        category: 'Bebidas',
+        prepTimeMinutes: 2,
+        imageUrl: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80',
+        available: true
+      }
+    ]
+  }
+];
+
+export const INITIAL_ORDERS: Order[] = [
+  {
+    id: 'CMD-1080',
+    restaurantId: 'rest-sabor-brasa',
+    restaurantName: 'Sabor & Brasa',
+    items: [
+      { itemId: 'item-sb-1', name: 'Burger Artesanal', quantity: 2, price: 32.90, observation: 'Ponto da carne ao ponto para bem passado.' },
+      { itemId: 'item-sb-2', name: 'Pizza Especial', quantity: 1, price: 45.00, observation: 'Sem cebola' }
+    ],
+    total: 110.80,
+    status: 'Em Preparação',
+    timestamp: Date.now() - 1000 * 60 * 12,
+    customerName: 'Mesa 02 (Leonardo)',
+    tableId: 'mesa-02',
+    tableNumber: 'Mesa 02',
+    prepTimeMinutes: 25,
+    notes: 'Cliente solicitou talheres extras.',
+    statusHistory: [
+      { status: 'Recebido', timestamp: Date.now() - 1000 * 60 * 12, note: 'Comanda aberta pelo Garçom' },
+      { status: 'Em Preparação', timestamp: Date.now() - 1000 * 60 * 8, note: 'Comanda aceita e enviada para a chapa' }
+    ]
+  },
+  {
+    id: 'CMD-1081',
+    restaurantId: 'rest-sabor-brasa',
+    restaurantName: 'Sabor & Brasa',
+    items: [
+      { itemId: 'item-sb-3', name: 'Double Bacon Smash', quantity: 1, price: 38.00 },
+      { itemId: 'item-sb-4', name: 'Batata Rústica com Alecrim', quantity: 1, price: 18.00 },
+      { itemId: 'item-sb-5', name: 'Refrigerante Lata 350ml', quantity: 2, price: 7.00 }
+    ],
+    total: 70.00,
+    status: 'Pronto',
+    timestamp: Date.now() - 1000 * 60 * 28,
+    customerName: 'Mesa 05 (Mariana)',
+    tableId: 'mesa-05',
+    tableNumber: 'Mesa 05',
+    prepTimeMinutes: 20,
+    statusHistory: [
+      { status: 'Recebido', timestamp: Date.now() - 1000 * 60 * 28 },
+      { status: 'Em Preparação', timestamp: Date.now() - 1000 * 60 * 24 },
+      { status: 'Pronto', timestamp: Date.now() - 1000 * 60 * 10, note: 'Prato finalizado na chapa. Aguardando garçom servir na mesa.' }
+    ]
+  },
+  {
+    id: 'CMD-1082',
+    restaurantId: 'rest-sabor-brasa',
+    restaurantName: 'Sabor & Brasa',
+    items: [
+      { itemId: 'item-sb-1', name: 'Burger Artesanal', quantity: 1, price: 32.90 },
+      { itemId: 'item-sb-4', name: 'Batata Rústica com Alecrim', quantity: 1, price: 18.00 }
+    ],
+    total: 50.90,
+    status: 'Pronto',
+    timestamp: Date.now() - 1000 * 60 * 18,
+    customerName: 'Balcão 01 (Gabriel)',
+    tableId: 'mesa-balcao-1',
+    tableNumber: 'Balcão 01',
+    prepTimeMinutes: 15,
+    statusHistory: [
+      { status: 'Recebido', timestamp: Date.now() - 1000 * 60 * 18 },
+      { status: 'Em Preparação', timestamp: Date.now() - 1000 * 60 * 15 },
+      { status: 'Pronto', timestamp: Date.now() - 1000 * 60 * 2, note: 'Aguardando garçom servir no balcão' }
+    ]
+  },
+  {
+    id: 'CMD-1083',
+    restaurantId: 'rest-sabor-brasa',
+    restaurantName: 'Sabor & Brasa',
+    items: [
+      { itemId: 'item-sb-2', name: 'Pizza Especial', quantity: 2, price: 45.00 }
+    ],
+    total: 90.00,
+    status: 'Recebido',
+    timestamp: Date.now() - 1000 * 60 * 2,
+    customerName: 'Mesa 04 (Lucas)',
+    tableId: 'mesa-04',
+    tableNumber: 'Mesa 04',
+    prepTimeMinutes: 20,
+    statusHistory: [
+      { status: 'Recebido', timestamp: Date.now() - 1000 * 60 * 2, note: 'Comanda lançada pelo garçom, aguardando início do preparo na cozinha' }
+    ]
+  },
+  {
+    id: 'CMD-1079',
+    restaurantId: 'rest-sabor-brasa',
+    restaurantName: 'Sabor & Brasa',
+    items: [
+      { itemId: 'item-sb-3', name: 'Double Bacon Smash', quantity: 2, price: 38.00 },
+      { itemId: 'item-sb-5', name: 'Refrigerante Lata 350ml', quantity: 2, price: 7.00 }
+    ],
+    total: 90.00,
+    status: 'Entregue',
+    timestamp: Date.now() - 1000 * 60 * 65,
+    customerName: 'Mesa 01 (Camila)',
+    tableId: 'mesa-01',
+    tableNumber: 'Mesa 01',
+    statusHistory: [
+      { status: 'Recebido', timestamp: Date.now() - 1000 * 60 * 65 },
+      { status: 'Em Preparação', timestamp: Date.now() - 1000 * 60 * 55 },
+      { status: 'Pronto', timestamp: Date.now() - 1000 * 60 * 40 },
+      { status: 'Entregue', timestamp: Date.now() - 1000 * 60 * 10, note: 'Pratos servidos na mesa e comanda finalizada' }
+    ]
+  }
+];
+
+export const INITIAL_USERS: User[] = [
+  {
+    email: 'garcom@saborbrasa.com',
+    name: 'Lucas Silveira',
+    password: '$2b$10$qG2AnwV2pWLIz7PGElTLt.Kkh8uem0zxtZHNHQfPxEjLA10hCHcZS',
+    role: 'garcom',
+    restaurantId: 'rest-sabor-brasa',
+    isVerified: true
+  },
+  {
+    email: 'cozinha@saborbrasa.com',
+    name: 'Chef Marcos',
+    password: '$2b$10$B8Zws/OifK9YJnLVpbh2eOpgm4Q8R8v.3.PMUFjz3MmS3L5qzYbY6',
+    role: 'kitchen',
+    restaurantId: 'rest-sabor-brasa',
+    isVerified: true
+  },
+  {
+    email: 'gerente@saborbrasa.com',
+    name: 'Mariana Gerente',
+    password: '$2b$10$Ycp8KtsOJOjCdI.me13UU.pgRGd.JO0wQL87qMQPZlvUiMmKNU9s.',
+    role: 'manager',
+    restaurantId: 'rest-sabor-brasa',
+    isVerified: true
+  },
+  {
+    email: 'leonardo@email.com',
+    name: 'Leonardo Tavares Pavan',
+    password: '$2b$10$Ycp8KtsOJOjCdI.me13UU.pgRGd.JO0wQL87qMQPZlvUiMmKNU9s.',
+    role: 'manager',
+    restaurantId: 'rest-sabor-brasa',
+    isVerified: true
+  },
+  {
+    email: 'admin@admin.com',
+    name: 'Gerente Geral Master',
+    password: '$2b$10$yX4/pNqUaZiLa1S69Se5f.2jrLdPqaBzEqLkXRamLEigEQq7ZvZSi',
+    role: 'admin',
+    isVerified: true
+  }
+];
+
+export const INITIAL_TABLES: RestaurantTable[] = [
+  {
+    id: 'mesa-01',
+    restaurantId: 'rest-sabor-brasa',
+    number: 1,
+    name: 'Mesa 01',
+    capacity: 4,
+    status: 'livre',
+    location: 'Salão Principal',
+    updatedAt: Date.now() - 3600000,
+  },
+  {
+    id: 'mesa-02',
+    restaurantId: 'rest-sabor-brasa',
+    number: 2,
+    name: 'Mesa 02',
+    capacity: 2,
+    status: 'ocupada',
+    currentOrderId: 'CMD-1080',
+    location: 'Salão Principal',
+    updatedAt: Date.now() - 3600000,
+  },
+  {
+    id: 'mesa-03',
+    restaurantId: 'rest-sabor-brasa',
+    number: 3,
+    name: 'Mesa 03',
+    capacity: 4,
+    status: 'livre',
+    location: 'Salão Principal',
+    updatedAt: Date.now() - 3600000,
+  },
+  {
+    id: 'mesa-04',
+    restaurantId: 'rest-sabor-brasa',
+    number: 4,
+    name: 'Mesa 04',
+    capacity: 6,
+    status: 'ocupada',
+    currentOrderId: 'CMD-1083',
+    location: 'Salão Principal',
+    updatedAt: Date.now() - 3600000,
+  },
+  {
+    id: 'mesa-05',
+    restaurantId: 'rest-sabor-brasa',
+    number: 5,
+    name: 'Mesa 05',
+    capacity: 4,
+    status: 'ocupada',
+    currentOrderId: 'CMD-1081',
+    location: 'Varanda Externa',
+    updatedAt: Date.now() - 3600000,
+  },
+  {
+    id: 'mesa-06',
+    restaurantId: 'rest-sabor-brasa',
+    number: 6,
+    name: 'Mesa 06',
+    capacity: 8,
+    status: 'livre',
+    location: 'Espaço Família',
+    updatedAt: Date.now() - 3600000,
+  },
+  {
+    id: 'mesa-balcao-1',
+    restaurantId: 'rest-sabor-brasa',
+    number: 'B1',
+    name: 'Balcão 01',
+    capacity: 1,
+    status: 'ocupada',
+    currentOrderId: 'CMD-1082',
+    location: 'Balcão',
+    updatedAt: Date.now() - 3600000,
+  }
+];

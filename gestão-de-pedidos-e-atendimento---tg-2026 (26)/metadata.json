@@ -1,0 +1,8 @@
+{
+  "name": "Sistema Web para Gerenciamento de Pedidos para Restaurantes",
+  "description": "Sistema integrado de gestão operacional de restaurante: esteira de cozinha (KDS), lançamento de comandas e mesas pelo garçom e administração do estabelecimento.",
+  "version": "3.1.0",
+  "releaseTag": "v3.1.0-tg-fatec",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

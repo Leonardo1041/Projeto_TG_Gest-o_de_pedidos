@@ -1,0 +1,63 @@
+================================================================================
+ EXECUÇÃO DO ROTEIRO DE TESTES DE ACEITAÇÃO (QUADRO 7)
+ Data/Hora      : 29/10/2026, 18:27:39
+ Ambiente       : Node.js v22.23.4 - Linux x86_64 - SQLite 3 WAL Mode
+ Versão Testada : 3.1.0 (Release Tag: v3.1.0-tg-fatec)
+ Endpoint       : http://localhost:3000
+ Banco Alvo     : /app/applet/data/database.sqlite
+================================================================================
+✔ Checkpoint do WAL (Preparação Preliminar) validado e consolidado com sucesso (busy=0, log=0, checkpointed=0, mode=wal).
+
+[FASE 0] Verificação de login dos três perfis com credenciais configuradas...
+ ✔ Garçom  (garcom@saborbrasa.com) -> Perfil: garcom [HTTP 200]
+ ✔ Cozinha (cozinha@saborbrasa.com) -> Perfil: kitchen [HTTP 200]
+ ✔ Gerente (gerente@saborbrasa.com) -> Perfil: manager [HTTP 200]
+
+[TESTE 1/8] Cadastro de funcionários e produtos...
+ -> Status: Aprovado
+
+[TESTE 2/8] Registro de pedido pelo garçom...
+ -> Status: Aprovado (Pedido: CMD-1084)
+
+[TESTE 3/8] Validação de operações inválidas...
+   ✔ 3.1 Pedido sem mesa recusado [HTTP 400]
+   ✔ 3.2 Pedido em mesa já ocupada recusado [HTTP 409]
+   ✔ 3.3 Produto com preço zero recusado [HTTP 400]
+   ✔ 3.4 Liberação manual de mesa ativa recusada [HTTP 409]
+   ✔ 3.5 Tentativa de bypass cadastral em mesa ocupada (PUT /api/tables/mesa-03):
+       • Estado antes : status="ocupada", currentOrderId="CMD-1084"
+       • Payload envio: { name: 'Mesa 03 Salão Nobre', status: 'livre', currentOrderId: null }
+       • Estado depois: status="ocupada", currentOrderId="CMD-1084" (preservado ocupada e ativo)
+ -> Status: Aprovado
+
+[TESTE 4/8] Atualização do status do pedido pela cozinha...
+ -> Status: Aprovado
+
+[TESTE 5/8] Registro da entrega e encerramento do atendimento...
+ -> Status: Aprovado
+
+[TESTE 6/8] Cancelamento de pedidos...
+ -> Status: Aprovado
+
+[TESTE 7/8] Controle de acesso ao cadastro de cardápio...
+ -> Status: Aprovado
+
+[TESTE 8/8] Verificação de persistência dos dados no SQLite...
+ -> Status: Aprovado
+    Contagens em disco: Colaboradores=6, Mesas=7, Categorias=6, Produtos=6, Pedidos=8
+✔ Checkpoint do WAL (Backup Pós-Testes) validado e consolidado com sucesso (busy=0, log=0, checkpointed=0, mode=wal).
+✔ Backup pós-testes gravado com sucesso em: /app/applet/data/backups/database_pos_testes_quadro7.sqlite
+✔ Backup pós-testes gravado com sucesso em: /app/applet/data/backups/database_pos_testes_quadro8.sqlite
+
+================================================================================
+ RESUMO FINAL DOS TESTES DO QUADRO 7 (100% EXECUTADOS)
+================================================================================
+ Total de Cenários : 8
+ Cenários Aprovados: 8
+ Cenários Reprovados: 0
+================================================================================
+
+✔ Documento oficial gerado com sucesso em: /app/applet/docs/documento_7_testes_rastreabilidade.md
+✔ Cópia de referência em: /app/applet/docs/quadro_7_testes_rastreabilidade.md
+
+✔ SUCESSO: Todos os 8 cenários do Quadro 7 foram aprovados com êxito comprovado.
